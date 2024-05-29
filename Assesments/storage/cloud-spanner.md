@@ -50,3 +50,43 @@ Creating a new Cloud Spanner instance for each build provides isolation at the d
 Links:
 
 https://cloud.google.com/spanner/docs/emulator#limitations
+
+### 3. You are developing an ecommerce application that stores customer, order, and inventory data as relational tables inside Cloud Spanner. During a recent load test, you discover that Spanner performance is not scaling linearly as expected.
+
+Which of the following is the cause?
+
+- A. The use of 64-bit numeric types for 32-bit numbers.
+
+- B. The use of Version 1 UUIDs as primary keys that increase monotonically.
+
+- C. The use of the STRING data type for arbitrary-precision values.
+
+- D. The use of LIKE instead of STARTS_WITH keyword for parameterized SQL queries.
+
+A. The use of 64-bit numeric types for 32-bit numbers.
+
+While this may be less efficient in terms of storage, it's unlikely to have a significant impact on Spanner's linear scaling capabilities.
+
+C. The use of the STRING data type for arbitrary-precision values.
+
+While using the STRING data type for arbitrary-precision values might not be the optimal choice, it should not substantially affect linear scaling.
+
+D. The use of LIKE instead of STARTS_WITH keyword for parameterized SQL queries.
+
+This could affect query performance, but it would not typically affect the linear scaling of the overall system.
+
+
+
+Correct Answer:
+
+B. The use of Version 1 UUIDs as primary keys that increase monotonically.
+
+In Cloud Spanner, the use of Version 1 UUIDs as primary keys that increase monotonically can cause performance issues because they are not evenly distributed. This can lead to hot regions, where a disproportionate number of requests are sent to a specific node or range of nodes, causing those nodes to become overloaded and leading to decreased performance. To improve performance, you should consider using primary keys that are more evenly distributed, such as hash-based keys or random integers.
+
+
+
+Links:
+
+https://cloud.google.com/spanner/docs/schema-and-data-model#choosing_a_primary_key
+
+https://cloud.google.com/spanner/docs/schema-design#primary-key-prevent-hotspots

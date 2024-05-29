@@ -180,9 +180,102 @@ https://cloud.google.com/kubernetes-engine/docs/concepts/service#services_of_typ
 
 https://cloud.google.com/kubernetes-engine/docs/concepts/horizontalpodautoscaler
 
+#
+
+### 8. Your application is running in multiple Google Kubernetes Engine clusters. It is managed by a Deployment in each cluster. The Deployment has created multiple replicas of your Pod in each cluster. You want to view the logs sent to stdout for all of the replicas in your Deployment in all clusters.
+
+Which command should you use?
+
+- A. kubectl logs [PARAM]
+
+- B. gcloud logging read [PARAM]
+
+- C. kubectl exec -it [PARAM] journalctl
+
+- D. gcloud compute ssh [PARAM] --command='sudo journalctl'
+
+### Ans: B
+
+
+Incorrect Answers:
+
+A. kubectl logs [PARAM]
+
+Doesn't have the functionality to view logs from all replicas across all clusters.
+
+C. kubectl exec -it [PARAM] journalctl
+
+would be used to execute a command within a specific Pod, not to get logs from all replicas in a Deployment.
+
+D. gcloud compute ssh [PARAM] --command='sudo journalctl'
+
+would be used to SSH into a Compute Engine instance and run a command, not to get logs from a GKE Deployment.
 
 
 
+Correct Answer:
+
+B. gcloud logging read [PARAM]
+
+https://cloud.google.com/blog/products/management-tools/using-logging-your-apps-running-kubernetes-engine: "gcloud command line tool – Using the gcloud logging read command, select the appropriate cluster, node, pod and container logs."
 
 
 
+Links:
+
+https://cloud.google.com/logging/docs/reference/tools/gcloud-logging#examples_2
+
+https://cloud.google.com/blog/products/management-tools/using-logging-your-apps-running-kubernetes-engine
+
+https://stackoverflow.com/questions/62007471/how-to-view-container-logs-via-stackdriver-on-gke
+
+
+### 9. You need to configure a Deployment on Google Kubernetes Engine (GKE). You want to include a check that verifies that the containers can connect to the database. If the Pod is failing to connect, you want a script on the container to run to complete a graceful shutdown.
+
+How should you configure the Deployment?
+
+- A. Create two jobs: one that checks whether the container can connect to the database, and another that runs the shutdown script if the Pod is failing.
+
+- B. Create the Deployment with a livenessProbe for the container that will fail if the container can't connect to the database. Configure a Prestop lifecycle handler that runs the shutdown script if the container is failing.
+
+- C. Create the Deployment with a PostStart lifecycle handler that checks the service availability. Configure a PreStop lifecycle handler that runs the shutdown script if the container is failing.
+
+- D. Create the Deployment with an initContainer that checks the service availability. Configure a Prestop lifecycle handler that runs the shutdown script if the Pod is failing.
+
+### Ans: B
+
+Incorrect Answers:
+
+A. Create two jobs: one that checks whether the container can connect to the database, and another that runs the shutdown script if the Pod is failing.
+
+Jobs are typically used for batch processing and are not suitable for continuous monitoring or handling graceful shutdowns of a running container.
+
+C. Create the Deployment with a PostStart lifecycle handler that checks the service availability. Configure a PreStop lifecycle handler that runs the shutdown script if the container is failing.
+
+PostStart handler would only be executed once, right after the container starts, and would not continuously monitor the connection to the database. Also, configuring a PreStop handler without a condition (e.g., liveness probe failure) doesn't align with the need to run the shutdown script only if the container is failing.
+
+D. Create the Deployment with an initContainer that checks the service availability. Configure a Prestop lifecycle handler that runs the shutdown script if the Pod is failing.
+
+InitContainers are used to set up conditions that must be met before the main container starts, so using an initContainer would not continuously monitor the database connection once the container is running. It also doesn't align with the requirement to run a script if the Pod is failing after it has been initialized.
+
+
+
+Correct Answer:
+
+B. Create the Deployment with a livenessProbe for the container that will fail if the container can't connect to the database. Configure a Prestop lifecycle handler that runs the shutdown script if the container is failing.
+
+Create the Deployment with a livenessProbe for the container that will fail if the container can't connect to the database. Utilizing a liveness probe allows Kubernetes to check the connection to the database continuously. If the container fails to connect to the database, the liveness probe will fail, triggering Kubernetes to restart the container.
+
+Configure a PreStop lifecycle handler that runs the shutdown script if the container is failing. According to Kubernetes documentation, the PreStop hook is called immediately before a container is terminated due to various reasons, such as an API request, liveness probe failure, or other management events. The PreStop hook is a good option for triggering a graceful shutdown without modifying the application, as mentioned in Google Cloud's best practices     This hook must complete before the TERM signal to stop the container can be sent. The Pod's termination grace period countdown begins before the PreStop hook is executed, so regardless of the outcome of the handler, the container will eventually terminate within the Pod's termination grace period.
+
+By combining these two features, you can ensure that the containers are continuously monitored for connectivity to the database and that a graceful shutdown script is executed if the container is failing.
+
+
+
+Links:
+
+https://cloud.google.com/architecture/best-practices-for-running-cost-effective-kubernetes-applications-on-gke#make_sure_your_applications_are_shutting_down_in_accordance_with_kubernetes_expectations
+
+
+
+https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#hook-details

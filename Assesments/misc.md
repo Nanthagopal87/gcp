@@ -36,4 +36,14 @@ Links:
 https://open4tech.com/array-vs-linked-list-vs-hash-table/
 
 
+### 2. How to build a container without using docker file?
+
+Google Cloud supports buildpacks—an open-source technology that facilitates the rapid and effortless creation of secure, production-ready container images from source code, without needing a Dockerfile. https://cloud.google.com/blog/products/containers-kubernetes/google-cloud-now-supports-buildpacks
+
+### 3. Deploy the application in Cloud Run from source code?
+
+Deploying from source code is possible in Cloud Run. You can deploy new services and new revisions directly from source code using a single gcloud CLI command, gcloud run deploy, with the --source flag.
+
+https://cloud.google.com/run/docs/deploying-source-code
+
 

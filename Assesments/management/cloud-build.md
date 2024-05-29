@@ -81,3 +81,90 @@ Option A is the simplest and most straightforward approach, using Google Cloud's
 https://cloud.google.com/build/docs/automating-builds/create-manage-triggers
 
 
+### 6. Your company's development teams want to use Cloud Build in their projects to build and push Docker images to Container Registry. The operations team requires all Docker images to be published to a centralized, securely managed Docker registry that the operations team manages.
+
+What should you do?
+
+- A.
+
+Use Container Registry to create a registry in each development team's project.
+
+Configure the Cloud Build build to push the Docker image to the project's registry.
+
+Grant the operations team access to each development team's registry.
+
+- B.
+
+Create a separate project for the operations team that has Container Registry configured.
+
+Assign appropriate permissions to the Cloud Build service account in each developer team's project to allow access to the operation team's registry.
+
+- C.
+
+Create a separate project for the operations team that has Container Registry configured.
+
+Create a Service Account for each development team and assign the appropriate permissions to allow it access to the operations team's registry.
+
+Store the service account key file in the source code repository and use it to authenticate against the operations team's registry.
+
+- D.
+
+Create a separate project for the operations team that has the open source Docker Registry deployed on a Compute Engine virtual machine instance.
+
+Create a username and password for each development team.
+
+Store the username and password in the source code repository and use it to authenticate against the operations team's Docker registry.
+
+### Ans: B
+
+ncorrect Answers:
+
+A.
+
+Use Container Registry to create a registry in each development team's project.
+
+Configure the Cloud Build build to push the Docker image to the project's registry.
+
+Grant the operations team access to each development team's registry.
+
+C.
+
+Create a separate project for the operations team that has Container Registry configured.
+
+Create a Service Account for each development team and assign the appropriate permissions to allow it access to the operations team's registry.
+
+Store the service account key file in the source code repository and use it to authenticate against the operations team's registry.
+
+D.
+
+Create a separate project for the operations team that has the open source Docker Registry deployed on a Compute Engine virtual machine instance.
+
+Create a username and password for each development team.
+
+Store the username and password in the source code repository and use it to authenticate against the operations team's Docker registry.
+
+Option A: Is not ideal because it requires granting the operations team access to each development team's registry, which may not be secure.
+
+Option C: It is not the best choice because it requires storing the service account key file in the source code repository, which may not be secure.
+
+Option D: This is not the best choice because it requires using an open-source Docker Registry and creating a username and password for each development team, which may not be secure or efficient.
+
+
+
+Correct Answer:
+
+B.
+
+Create a separate project for the operations team that has Container Registry configured.
+
+Assign appropriate permissions to the Cloud Build service account in each developer team's project to allow access to the operation team's registry.
+
+B is the best choice because it allows the operations team to have control over the centralized, securely managed Docker registry while also enabling the development teams to use Cloud Build in their projects. In this option, the operations team can create a separate project with Container Registry configured and grant appropriate permissions to the Cloud Build service account in each development team's project, allowing access to the operations team's registry. This approach enables the development teams to build and push Docker images to the centralized registry while still adhering to the operations team's requirements.
+
+
+
+Links:
+
+https://cloud.google.com/container-registry/
+
+https://stackoverflow.com/questions/48602546/google-cloud-functions-how-to-securely-store-service-account-private-key-when

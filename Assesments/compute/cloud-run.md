@@ -76,5 +76,61 @@ Involves making an API call to the Cloud Asset Inventory API, which could add un
 
 https://cloud.google.com/run/docs/container-contract#metadata-server
 
+#
+
+### 4. You have recently developed a new application and want to deploy it on Cloud Run without using a Dockerfile.
+
+Considering your organization's requirement that all container images must be pushed to a centrally managed container repository, how should you build your container using Google Cloud services? (Choose two options.)
+
+
+- A. Push your source code to Artifact Registry.
+
+- B. Submit a Cloud Build job to push the image.
+
+- C. Use the pack build command with pack CLI.
+
+- D. Include the --source flag with the gcloud run deploy CLI command.
+
+- E. Include the --platform=kubernetes flag with the gcloud run deploy CLI command.
+
+### Ans: C & D
+
+ncorrect Answers:
+
+A. Push your source code to Artifact Registry.
+
+B. Submit a Cloud Build job to push the image.
+
+E. Include the --platform=kubernetes flag with the gcloud run deploy CLI command.
+
+Option A: is incorrect because Artifact Registry is designed for container images, not source code.
+
+Option B: is incorrect because only the built image needs to be deployed to Cloud Run. A "centrally managed container repository" could be located outside Google, so the build tool may not necessarily be Cloud Build.
+
+Option: E: is irrelevant in this case, as Kubernetes (K8S) is not involved in the question.
+
+
+
+Correct Answer:
+
+C. Use the pack build command with pack CLI.
+
+D. Include the --source flag with the gcloud run deploy CLI command.
+
+Option C: Google Cloud supports buildpacks—an open-source technology that facilitates the rapid and effortless creation of secure, production-ready container images from source code, without needing a Dockerfile. https://cloud.google.com/blog/products/containers-kubernetes/google-cloud-now-supports-buildpacks
+
+Option D: Deploying from source code is possible in Cloud Run. You can deploy new services and new revisions directly from source code using a single gcloud CLI command, gcloud run deploy, with the --source flag.
+
+https://cloud.google.com/run/docs/deploying-source-code
+
+
+
+Links:
+
+https://cloud.google.com/run/docs/deploying-source-code
+
+https://cloud.google.com/blog/products/containers-kubernetes/google-cloud-now-supports-buildpacks
+
+
 
 

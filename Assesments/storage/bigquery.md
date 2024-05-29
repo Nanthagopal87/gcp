@@ -64,3 +64,104 @@ Option A is the correct choice for this scenario. By granting the service accoun
 Links:
 
 https://cloud.google.com/bigquery/docs/access-control#bigquery
+
+
+### 2. You have an HTTP Cloud Function that is called via POST. Each submission's request body has a flat, unnested JSON structure containing numeric and text data. After the Cloud Function completes, the collected data should be immediately available for ongoing and complex analytics by many users in parallel.
+
+How should you persist the submissions?
+
+- A. Directly persist each POST request's JSON data into Datastore.
+
+- B. Transform the POST request's JSON data, and stream it into BigQuery.
+
+- C. Transform the POST request's JSON data, and store it in a regional Cloud SQL cluster.
+
+- D. Persist each POST request's JSON data as an individual file within Cloud Storage, with the file name containing the request identifier.
+
+### Ans: B
+
+Incorrect Answers:
+
+A. Directly persist each POST request's JSON data into Datastore.
+
+Directly persist each POST request's JSON data into Datastore. Datastore is a NoSQL document database that can be used to store structured data, but it's not designed to handle the high volume of data that you need to analyze in near real-time. And it would require additional processing to be available for analysis.
+
+C. Transform the POST request's JSON data, and store it in a regional Cloud SQL cluster.
+
+Cloud SQL could handle the persistence of the data but might not be as efficient as BigQuery for complex analytics with many parallel users.
+
+D. Persist each POST request's JSON data as an individual file within Cloud Storage, with the file name containing the request identifier.
+
+Storing each POST request's JSON data as an individual file within Cloud Storage is inefficient for immediate and complex analytics.
+
+
+
+Correct Answer:
+
+B. Transform the POST request's JSON data, and stream it into BigQuery.
+
+BigQuery is a highly scalable data warehouse that is well suited for handling large amounts of data and complex analytics in near real-time. By streaming the JSON data from your Cloud Function directly into BigQuery, you can make the collected data immediately available for analytics by many users in parallel. BigQuery support various data types including JSON, so you can store your request body without any transformation
+
+
+
+Links:
+
+https://cloud.google.com/bigquery/docs/streaming-data-into-bigquery
+
+
+### 3. Your company has a BigQuery dataset named “Master”, which contains information about employee travel and expenses, organized by employee department. Since employees should only be able to view information for their respective departments, you want to apply a security framework to enforce this requirement using the minimum number of steps.
+
+What should you do?
+
+- A.
+
+- Create a separate dataset for each department.
+
+- Create a view with an appropriate WHERE clause to select records from a particular dataset for the specific department.
+
+- Authorize this view to access records from your Master dataset.
+
+- Give employees the permission to this department-specific dataset.
+
+- B.
+
+- Create a separate dataset for each department.
+
+- Create a data pipeline for each department to copy appropriate information from the Master dataset to the specific dataset for the department.
+
+- Give employees the permission to this department-specific dataset.
+
+- C.
+
+- Create a dataset named Master dataset.
+
+- Create a separate view for each department in the Master dataset.
+
+- Give employees access to the specific view for their department.
+
+- D.
+
+- Create a dataset named Master dataset.
+
+- Create a separate table for each department in the Master dataset.
+
+- Give employees access to the specific table for their department.
+
+
+### Ans: C
+
+C.
+
+Create a dataset named Master dataset.
+
+Create a separate view for each department in the Master dataset.
+
+Give employees access to the specific view for their department.
+
+This approach creates views within the existing "Master" dataset, tailoring access to specific departmental needs. It's likely the most straightforward to implement and manage, offering a good balance between security and ease of use and has a minimum number of steps.
+
+
+
+Links:
+
+https://cloud.google.com/bigquery/docs/share-access-views

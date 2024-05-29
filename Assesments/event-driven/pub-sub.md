@@ -69,6 +69,48 @@ Option B provides a straightforward and cost-effective way to achieve exactly-on
 
 https://cloud.google.com/dataflow/docs/concepts/streaming-with-cloud-pubsub
 
+### 4. Your team is developing an application in Google Cloud that executes with user identities maintained by Cloud Identity. Each of your application's users will have an associated Pub/Sub topic to which messages are published, and a Pub/Sub subscription where the same user will retrieve published messages.
+
+You need to ensure that only authorized users can publish and subscribe to their own specific Pub/Sub topic and subscription.
+
+-   A. Grant the user identity a custom role that contains the pubsub.topics.create and pubsub.subscriptions.create permissions.
+
+- B. Configure the application to run as a service account that has the pubsub.publisher and pubsub.subscriber roles.
+
+- C. Bind the user identity to the pubsub.publisher and pubsub.subscriber roles at the resource level.
+
+- D. Grant the user identity the pubsub.publisher and pubsub.subscriber roles at the project level.
+
+### Ans: C
+
+ncorrect Answers:
+
+A. Grant the user identity a custom role that contains the pubsub.topics.create and pubsub.subscriptions.create permissions.
+
+Granting the user identity a custom role that contains the pubsub.topics.create and pubsub.subscriptions.create permissions would allow the user to create topics and subscriptions, but not grant access to their specific topic or subscription.
+
+B. Configure the application to run as a service account that has the pubsub.publisher and pubsub.subscriber roles.
+
+Configuring the application to run as a service account that has the pubsub.publisher and pubsub.subscriber roles would not provide granular permissions management for the user
+
+D. Grant the user identity the pubsub.publisher and pubsub.subscriber roles at the project level.
+
+Granting the user identity the pubsub.publisher and pubsub.subscriber roles at the project level would give the user access to all topics and subscriptions within the project, not just those specific to a user.
+
+
+
+Correct Answer:
+
+C. Bind the user identity to the pubsub.publisher and pubsub.subscriber roles at the resource level.
+
+By binding the user identity to the pubsub.publisher and pubsub.subscriber roles at the resource level, you can ensure that each user can only publish to and subscribe to their specific Pub/Sub topic and subscription. This approach allows for granular permissions management and ensures that each user can access only the resources they are authorized to.
+
+
+
+Link:
+
+https://cloud.google.com/pubsub/docs/access-control
+
 
 
 

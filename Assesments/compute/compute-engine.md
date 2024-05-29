@@ -143,3 +143,90 @@ This option is the correct one. You would configure the instances in project A w
 Links:
 
 https://cloud.google.com/pubsub/docs/access-control
+
+
+### 7. Your application is composed of a set of loosely coupled services orchestrated by code executed on Compute Engine. You want your application to easily bring up new Compute Engine instances that find and use a specific version of a service.
+
+How should this be configured?
+
+- A. Define your service endpoint information as metadata that is retrieved at runtime and used to connect to the desired service.
+
+- B. Define your service endpoint information as label data that is retrieved at runtime and used to connect to the desired service.
+
+- C. Define your service endpoint information to be retrieved from an environment variable at runtime and used to connect to the desired service.
+
+- D. Define your service to use a fixed hostname and port to connect to the desired service. Replace the service at the endpoint with your new version.
+
+### Ans: A
+
+B. Define your service endpoint information as label data that is retrieved at runtime and used to connect to the desired service.
+
+Labels are typically used for organizing resources rather than for runtime configuration.
+
+C. Define your service endpoint information to be retrieved from an environment variable at runtime and used to connect to the desired service.
+
+Depending on environment variables can lead to tighter coupling and may not provide the desired flexibility for managing service versions.
+
+D. Define your service to use a fixed hostname and port to connect to the desired service. Replace the service at the endpoint with your new version.
+
+D. Using a fixed hostname and port might not provide the necessary flexibility to work with different versions of the service.
+
+
+
+Correct Answer:
+
+A. Define your service endpoint information as metadata that is retrieved at runtime and used to connect to the desired service.
+
+Option A allows you to store the endpoint information as metadata, which can be retrieved by the Compute Engine instances at runtime. This method makes it possible to change the endpoint information without modifying the instances, thereby supporting loosely coupled services and easing the process of managing different versions of a service.
+
+https://cloud.google.com/apis/design/glossary#api_service_endpoint
+
+https://cloud.google.com/compute/docs/metadata/overview
+
+https://cloud.google.com/service-infrastructure/docs/service-metadata/reference/rest#service-endpoint
+
+### 8. You are deploying your applications on Compute Engine. One of your Compute Engine instances failed to launch.
+
+What should you do? (Choose two options.)
+
+- A. Determine whether your file system is corrupted.
+
+- B. Access Compute Engine as a different SSH user.
+
+- C. Troubleshoot firewall rules or routes on an instance.
+
+- D. Check whether your instance boot disk is completely full.
+
+- E. Check whether network traffic to or from your instance is being dropped.
+
+### Ans: C & D
+
+Incorrect Answers:
+
+A. Determine whether your file system is corrupted.
+
+B. Access Compute Engine as a different SSH user.
+
+E. Check whether network traffic to or from your instance is being dropped.
+
+Option A While filesystem corruption can be a cause of instance failure, it's less likely to be the immediate cause of a failed instance launch. Checking the filesystem integrity can be part of troubleshooting, but it's not as critical as ensuring sufficient disk space (Option D) or proper network connectivity (Option E) for the instance to launch.
+
+Option B This option is unrelated to troubleshooting a failed instance launch. Accessing Compute Engine as a different SSH user doesn't address the underlying issue causing the instance failure.
+
+Option E While network issues can indeed cause instance launch failures, troubleshooting firewall rules or routes (Option C) directly addresses potential network connectivity problems. Checking whether network traffic is being dropped (Option E) is essentially part of this troubleshooting process.
+
+Correct Answer:
+
+C. Troubleshoot firewall rules or routes on an instance.
+
+D. Check whether your instance boot disk is completely full.
+
+The most immediate and relevant steps to address a failed instance launch are to troubleshoot firewall rules or routes (Option C) and to check whether the instance boot disk is completely full (Option D). These actions focus on ensuring proper network connectivity and disk space, which are essential for a successful instance launch.
+
+https://cloud.google.com/compute/docs/troubleshooting/vm-startup
+
+
+
+Links:
+
+https://cloud.google.com/compute/docs/troubleshooting/vm-startup

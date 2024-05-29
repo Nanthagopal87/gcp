@@ -42,3 +42,48 @@ https://cloud.google.com/logging/docs/export
 
 https://cloud.google.com/monitoring/api/v3/
 
+#
+
+### 3. You need to migrate a standalone Java application running in an on-premises Linux virtual machine (VM) to Google Cloud in a cost-effective manner. You decide not to take the lift-and-shift approach, and instead you plan to modernize the application by converting it to a container.
+
+How should you accomplish this task?
+
+- A. Use Migrate for Anthos to migrate the VM to your Google Kubernetes Engine (GKE) cluster as a container.
+
+- B. Export the VM as a raw disk and import it as an image. Create a Compute Engine instance from the imported image.
+
+- C. Use Migrate for Compute Engine to migrate the VM to a Compute Engine instance, and use Cloud Build to convert it to a container.
+
+- D. Use Jib to build a Docker image from your source code, and upload it to Artifact Registry. Deploy the application in a GKE cluster, and test the application.
+
+### Ans: D
+
+ncorrect Answers:
+
+A. Use Migrate for Anthos to migrate the VM to your Google Kubernetes Engine (GKE) cluster as a container.
+
+B. Export the VM as a raw disk and import it as an image. Create a Compute Engine instance from the imported image.
+
+C. Use Migrate for Compute Engine to migrate the VM to a Compute Engine instance, and use Cloud Build to convert it to a container.
+
+Option A, using Migrate for Anthos, would migrate the VM to GKE, but this is more of a lift-and-shift approach and doesn't necessarily involve modernizing the application.
+
+Option B, exporting the VM as a raw disk and importing it as an image, doesn't involve containerization and is more related to replicating the VM in the cloud.
+
+Option C, using Migrate for Compute Engine to migrate the VM to Compute Engine and then using Cloud Build, may lead to a containerized solution, but it's more complex than necessary for the given task.
+
+
+
+Correct Answer:
+
+D. Use Jib to build a Docker image from your source code, and upload it to Artifact Registry. Deploy the application in a GKE cluster, and test the application.
+
+Option D, using Jib to build a Docker image from the source code, allows for a more modern approach by building a containerized image directly from the source code. It also includes deployment in GKE, which aligns with the goal of moving to a container-based architecture. Jib is a Maven/Gradle plugin specifically designed for building Java container images, making it a suitable choice for this Java application migration.
+
+In the given scenario, where the goal is to modernize the application by converting it to a container rather than just lifting and shifting the VM, option D is the most appropriate approach.
+
+
+Links:
+
+https://cloud.google.com/blog/products/application-development/introducing-jib-build-java-docker-images-better
+
