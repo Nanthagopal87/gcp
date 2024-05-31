@@ -131,6 +131,44 @@ https://cloud.google.com/run/docs/deploying-source-code
 
 https://cloud.google.com/blog/products/containers-kubernetes/google-cloud-now-supports-buildpacks
 
+### 5. Users are complaining that your Cloud Run-hosted website responds too slowly during traffic spikes.
+You want to provide a better user experience during traffic peaks.
+What should you do?
+
+- A. Read application configuration and static data from the database on application startup.
+
+- B. Package application configuration and static data into the application image during build time.
+
+- C. Perform as much work as possible in the background after the response has been returned to the user.
+
+- D. Ensure that timeout exceptions and errors cause the Cloud Run instance to exit quickly so a replacement instance can be started.
+
+### Ans: B
+
+ncorrect Answers:
+
+A. Read application configuration and static data from the database on application startup.
+
+Reading data from the database on every startup could actually add to the latency, especially during traffic spikes when new instances are likely to be started frequently.
+
+C. Perform as much work as possible in the background after the response has been returned to the user.
+
+While offloading background tasks can improve user-perceived performance, it doesn't specifically address the issue of slow response times during traffic spikes. Background tasks might even consume additional resources that could be used to handle incoming requests.
+
+D. Ensure that timeout exceptions and errors cause the Cloud Run instance to exit quickly so a replacement instance can be started.
+
+While quickly replacing failing instances is generally a good practice, this doesn't specifically address the issue of slow response times during high traffic. Additionally, constantly replacing instances could lead to additional overhead and further slow down response times.
 
 
 
+Correct Answer:
+
+B. Package application configuration and static data into the application image during build time.
+
+By bundling configuration and static data into the application image, you reduce the need to fetch this data from external sources during runtime. This can lead to faster response times, particularly during traffic peaks when the system is under increased load.
+
+
+
+Links:
+
+https://cloud.google.com/blog/topics/developers-practitioners/3-ways-optimize-cloud-run-response-times

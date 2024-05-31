@@ -83,7 +83,7 @@ You need to ensure that only authorized users can publish and subscribe to their
 
 ### Ans: C
 
-ncorrect Answers:
+Incorrect Answers:
 
 A. Grant the user identity a custom role that contains the pubsub.topics.create and pubsub.subscriptions.create permissions.
 
@@ -110,6 +110,54 @@ By binding the user identity to the pubsub.publisher and pubsub.subscriber roles
 Link:
 
 https://cloud.google.com/pubsub/docs/access-control
+
+
+### 5. You need to redesign the ingestion of audit events from your authentication service to allow it to handle a large increase in traffic. Currently, the audit service and the authentication system run in the same Compute Engine virtual machine. You plan to use the following Google Cloud tools in the new architecture:
+
+Multiple Compute Engine machines, each running an instance of the authentication service
+
+Multiple Compute Engine machines, each running an instance of the audit service
+
+Pub/Sub to send the events from the authentication services.
+
+How should you set up the topics and subscriptions to ensure that the system can handle a large volume of messages and can scale efficiently?
+
+- A. Create one Pub/Sub topic. Create one pull subscription to allow the audit services to share the messages.
+
+- B. Create one Pub/Sub topic. Create one pull subscription per audit service instance to allow the services to share the messages.
+
+- C. Create one Pub/Sub topic. Create one push subscription with the endpoint pointing to a load balancer in front of the audit services.
+
+- D. Create one Pub/Sub topic per authentication service. Create one pull subscription per topic to be used by one audit service.
+
+### Ans: A
+
+Create one Pub/Sub topic. Create one pull subscription per audit service instance to allow the services to share the messages.
+
+This would create a separate subscription for each audit service. Since they are all consuming from the same topic, this can lead to the same message being sent to multiple subscriptions, creating duplicate processing.
+
+C. Create one Pub/Sub topic. Create one push subscription with the endpoint pointing to a load balancer in front of the audit services.
+
+While this approach has its merits, using a push subscription with a load balancer could be more complex and might not be as suitable for this specific use case as option A. Managing push delivery might introduce unnecessary complexity.
+
+D. Create one Pub/Sub topic per authentication service. Create one pull subscription per topic to be used by one audit service.
+
+This setup would result in a tight coupling between each authentication service and an audit service, leading to potential bottlenecks and inefficient use of resources.
+
+
+
+Correct Answer:
+
+A. Create one Pub/Sub topic. Create one pull subscription to allow the audit services to share the messages.
+
+With this setup, all the audit services can pull messages from the same subscription. This ensures that each message is processed once by one of the available audit services, providing a scalable solution without duplicating messages.
+
+
+
+Links:
+
+https://cloud.google.com/pubsub/docs/subscriber
+
 
 
 

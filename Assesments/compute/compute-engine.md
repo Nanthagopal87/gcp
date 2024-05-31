@@ -230,3 +230,46 @@ https://cloud.google.com/compute/docs/troubleshooting/vm-startup
 Links:
 
 https://cloud.google.com/compute/docs/troubleshooting/vm-startup
+
+
+### 9. Your application is running on Compute Engine and is showing sustained failures for a small number of requests. You have narrowed the cause down to a single Compute Engine instance, but the instance is unresponsive to SSH.
+
+What should you do next?
+
+- A. Reboot the machine.
+
+- B. Enable and check the serial port output.
+
+- C. Delete the machine and create a new one.
+
+- D. Take a snapshot of the disk and attach it to a new machine.
+
+### Ans: B
+
+Incorrect Answers:
+
+A. Reboot the machine.
+
+Might temporarily resolve the problem but won't provide insight into what caused the issue, so it may recur.
+
+C. Delete the machine and create a new one.
+
+Might also solve the problem temporarily, but without investigating the root cause, you won't be able to prevent it from happening again.
+
+D. Take a snapshot of the disk and attach it to a new machine.
+
+Could be a more drastic measure that might be considered later, but checking the serial port output is a simpler and more direct way to diagnose the problem.
+
+
+
+Correct Answer:
+
+B. Enable and check the serial port output.
+
+Is the correct next step. This will allow you to see boot and system logs, which could give you clues about what went wrong.
+
+
+
+Links:
+
+https://cloud.google.com/compute/docs/troubleshooting/troubleshooting-ssh#debug_with_serial_console

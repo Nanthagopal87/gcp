@@ -64,3 +64,48 @@ https://cloud.google.com/functions/docs/calling/storage
 
 Invoke Cloud Functions or Cloud Run
 https://cloud.google.com/workflows/docs/calling-run-functions#:~:text=Calling%20or%20invoking%20a%20Google,the%20call%20field%20to%20http.
+
+
+### 3. Your data is stored in Cloud Storage buckets.
+
+Fellow developers have reported that data downloaded from Cloud Storage is resulting in slow API performance. You want to research the issue to provide details to the Google Cloud support team.
+
+Which command should you run?
+
+- A. gsutil test -o output.json gs://my-bucket
+
+- B. gsutil perfdiag -o output.json gs://my-bucket
+
+- C. gcloud compute scp example-instance:~/test-data -o output.json gs://my-bucket
+
+- D. gcloud services test -o output.json gs://my-bucket
+
+### Ans: B
+
+Incorrect Answers:
+
+A. gsutil test -o output.json gs://my-bucket
+
+This command does not exist in the gsutil command-line tool, and the option "test" is not recognized, so it won't execute properly.
+
+C. gcloud compute scp example-instance:~/test-data -o output.json gs://my-bucket
+
+The gcloud compute scp command is used to copy files between a local machine and a virtual machine, or between two virtual machines. It's not related to diagnosing performance issues with Cloud Storage, so it's not applicable to the task at hand.
+
+D. gcloud services test -o output.json gs://my-bucket
+
+This command doesn't exist in the gcloud command-line tool. There is no "test" command under gcloud services, so this line would result in an error.
+
+
+
+Correct Answer:
+
+B. gsutil perfdiag -o output.json gs://my-bucket
+
+The gsutil perfdiag command can be used to diagnose performance issues with Google Cloud Storage. It runs a suite of diagnostic tests and collects information that might help to identify what's causing performance problems.
+
+
+
+Links:
+
+https://cloud.google.com/storage/docs/gsutil/commands/perfdiag#providing-diagnostic-output-to-cloud-storage-team

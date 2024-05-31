@@ -279,3 +279,173 @@ https://cloud.google.com/architecture/best-practices-for-running-cost-effective-
 
 
 https://kubernetes.io/docs/concepts/containers/container-lifecycle-hooks/#hook-details
+
+### 10. You are porting an existing Apache/MySQL/PHP application stack from a single machine to Google
+
+Kubernetes Engine. You need to determine how to containerize the application. Your approach should follow Google-recommended best practices for availability.
+
+What should you do?
+
+- A. Package each component in a separate container. Implement readiness and liveness probes.
+- B. Package the application in a single container. Use a process management tool to manage each component.
+- C. Package each component in a separate container. Use a script to orchestrate the launch of the components.
+- D. Package the application in a single container. Use a bash script as an entrypoint to the container, and then spawn each component as a background job.
+
+### Ans: A
+
+Incorrect Answers:
+
+B. Package the application in a single container. Use a process management tool to manage each component.
+
+This approach violates the principle of one process per container, making the system harder to manage, scale, and troubleshoot. If one process fails, it can affect the entire container, leading to more downtime and complexity in isolating issues.
+
+C. Package each component in a separate container. Use a script to orchestrate the launch of the components.
+
+While separating each component into a different container aligns with best practices, the use of custom scripts for orchestration doesn't leverage Kubernetes' native capabilities for managing containers. This may lead to higher maintenance costs and less effective management compared to using Kubernetes' built-in orchestration features.
+
+D. Package the application in a single container. Use a bash script as an entrypoint to the container, and then spawn each component as a background job.
+
+Again, this option fails to follow the one process per container principle. Managing multiple background jobs within a single container can lead to tangled dependencies and make it difficult to diagnose issues. If one background job fails, it could affect the entire container. The use of bash scripts for management also doesn't take advantage of Kubernetes' orchestration features, leading to a more fragile and less scalable system.
+
+
+
+Correct Answer:
+
+A. Package each component in a separate container. Implement readiness and liveness probes.
+
+By packaging each component in a separate container and implementing readiness and liveness probes, aligns with best practices for containerization and leverages Kubernetes' features to manage the containers efficiently and effectively.
+
+
+
+Links:
+
+https://cloud.google.com/architecture/best-practices-for-building-containers#package_a_single_app_per_container
+
+### 11. You are a SaaS provider deploying dedicated blogging software to customers in your Google Kubernetes Engine (GKE) cluster. You want to configure a secure multi-tenant platform to ensure that each customer has access to only their own blog and can't affect the workloads of other customers.
+
+What should you do?
+
+- A. Enable Application-layer Secrets on the GKE cluster to protect the cluster.
+
+- B. Deploy a namespace per tenant and use Network Policies in each blog deployment.
+
+- C. Use GKE Audit Logging to identify malicious containers and delete them on discovery.
+
+- D. Build a custom image of the blogging software and use Binary Authorization to prevent untrusted image deployments.
+
+### Ans: C
+
+ncorrect Answers:
+
+A. Enable Application-layer Secrets on the GKE cluster to protect the cluster.
+
+This does not address the multi-tenancy requirements, as it's more about protecting secrets rather than isolating tenants.
+
+C. Use GKE Audit Logging to identify malicious containers and delete them on discovery.
+
+While audit logging can help in identifying suspicious or unauthorized activities, it doesn't directly provide isolation or restrictions between tenants.
+
+D. Build a custom image of the blogging software and use Binary Authorization to prevent untrusted image deployments.
+
+Binary Authorization ensures that only trusted container images are deployed, but it doesn't provide isolation between different tenants or control over access to individual blogs.
+
+
+
+Correct Answer:
+
+B. Deploy a namespace per tenant and use Network Policies in each blog deployment.
+
+By creating a separate namespace for each tenant, you can isolate resources at the Kubernetes level, ensuring that each tenant's workloads are separated from others.
+
+Implementing Network Policies further restricts communication between different tenants, enforcing the isolation at the network level and ensuring that one tenant's workloads can't interact with another's.
+
+
+
+Links:
+
+https://cloud.google.com/kubernetes-engine/docs/concepts/multitenancy-overview#network_policies
+
+
+### 12. One of your deployed applications in Google Kubernetes Engine (GKE) is having intermittent performance issues. Your team uses a third-party logging solution. You want to install this solution on each node in your GKE cluster so you can view the logs.
+
+What should you do?
+
+- A. Deploy the third-party solution as a DaemonSet
+
+- B. Modify your container image to include the monitoring software
+
+- C. Use SSH to connect to the GKE node, and install the software manually
+
+- D. Deploy the third-party solution using Terraform and deploy the logging Pod as a Kubernetes Deployment
+
+### Ans: A
+
+ncorrect Answers:
+
+B. Modify your container image to include the monitoring software
+
+This would embed the logging solution within the application container itself. If the logging solution needs to be deployed to every node in the cluster, including nodes that may not be running this particular application, then this approach wouldn't work.
+
+C. Use SSH to connect to the GKE node, and install the software manually
+
+Manual installation does not follow best practices for maintaining infrastructure, particularly in Kubernetes. It introduces difficulties in maintaining consistency across nodes and recovering from node failures. It's also worth noting that GKE nodes are often managed and may not permit direct access for such changes.
+
+D. Deploy the third-party solution using Terraform and deploy the logging Pod as a Kubernetes Deployment
+
+Deploying the logging solution as a standard Deployment wouldn't ensure that an instance of the logging solution is running on every node. A Deployment is designed to ensure that a specified number of replicas of your application are running, not to enforce that the application runs on every node in your cluster.
+
+
+
+Correct Answer:
+
+A. Deploy the third-party solution as a DaemonSet
+
+A DaemonSet ensures that all or some worker nodes run a copy of a Pod. As nodes are added to the cluster, Pods are added to them. If you want to deploy a monitoring or logging agent to every node in your cluster, then a DaemonSet is the correct way to do it.
+
+Links:
+
+https://kubernetes.io/docs/concepts/workloads/controllers/daemonset
+
+https://cloud.google.com/kubernetes-engine/docs/concepts/daemonset#usage_patterns
+
+
+### 13. You are a cluster administrator for Google Kubernetes Engine (GKE). Your organization's clusters are enrolled in a release channel. You need to stay informed about relevant events affecting your GKE clusters, such as available upgrades and security bulletins.
+
+What should you do?
+
+- A. Set up cluster notifications to be sent to a Pub/Sub topic.
+
+- B. Perform a scheduled query against the google_cloud_release_notes BigQuery dataset.
+
+- C. Query the GKE API to check for available versions.
+
+- D. Create an RSS subscription to receive a daily summary of the GKE release notes.
+
+
+### Ans: A
+
+Incorrect Answers:
+
+B. Perform a scheduled query against the google_cloud_release_notes BigQuery dataset.
+
+This approach involves using BigQuery, Google's data warehouse service, to periodically query the google_cloud_release_notes dataset for updates relevant to GKE. While this can provide comprehensive information, including details about releases and updates, it requires setting up and maintaining scheduled queries. This method might not be as immediate or real-time as other notification systems and could require more effort to filter and parse the information specifically for GKE.
+
+C. Query the GKE API to check for available versions.
+
+By querying the GKE API for available versions, you can directly obtain information about the latest versions and updates for GKE. This method allows for a targeted approach to check specifically for version updates. However, it might not provide a comprehensive overview of all relevant events like security bulletins and requires regular API calls to stay updated.
+
+D. Create an RSS subscription to receive a daily summary of the GKE release notes.
+
+Subscribing to an RSS feed for GKE release notes is a straightforward way to receive daily summaries of updates and changes. This method ensures that you are regularly informed about new releases, upgrades, and potentially security bulletins. However, it might not provide the immediacy of other methods like Pub/Sub notifications and typically requires manual review of the updates.
+
+Correct answer:
+
+A. Set up cluster notifications to be sent to a Pub/Sub topic.
+
+This option involves configuring Google Cloud Pub/Sub to receive notifications related to your GKE clusters. Pub/Sub is a messaging service that can be used to stream event data. By setting up cluster notifications in this way, you would be able to receive real-time updates on events like cluster upgrades or security issues. This method is highly efficient for automated monitoring and integrating with other systems or alerting mechanisms you might have in place.
+
+Links:
+
+https://cloud.google.com/kubernetes-engine/docs/concepts/cluster-notifications
+
+https://cloud.google.com/kubernetes-engine/docs/concepts/release-channels#channels

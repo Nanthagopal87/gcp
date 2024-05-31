@@ -90,3 +90,49 @@ Links:
 https://cloud.google.com/spanner/docs/schema-and-data-model#choosing_a_primary_key
 
 https://cloud.google.com/spanner/docs/schema-design#primary-key-prevent-hotspots
+
+### 4. You are writing from a Go application to a Cloud Spanner database. You want to optimize your application’s performance using Google-recommended best practices.
+
+What should you do?
+
+- A. Write to Cloud Spanner using Cloud Client Libraries.
+
+- B. Write to Cloud Spanner using Google API Client Libraries
+
+- C. Write to Cloud Spanner using a custom gRPC client library.
+
+- D. Write to Cloud Spanner using a third-party HTTP client library.
+
+### Ans: A
+
+ncorrect Answers:
+
+B. Write to Cloud Spanner using Google API Client Libraries
+
+While this is technically possible, Cloud Client Libraries are preferred as they are specifically tailored to the service, making development easier and more efficient.
+
+C. Write to Cloud Spanner using a custom gRPC client library.
+
+Creating a custom gRPC client library is likely to be more error-prone and time-consuming compared to using the officially supported libraries.
+
+D. Write to Cloud Spanner using a third-party HTTP client library.
+
+Relying on third-party libraries can introduce compatibility and support risks, and may not be optimized for Cloud Spanner.
+
+
+
+Correct Answer:
+
+A. Write to Cloud Spanner using Cloud Client Libraries.
+
+When working with Cloud Spanner from a Go application, Google recommends using Cloud Client Libraries, which are idiomatic and optimized for the service. These libraries make it easier to integrate with Google Cloud services, providing a higher-level, more convenient abstraction over Google API Client Libraries.
+
+So Option A is the recommended approach as it provides an idiomatic and optimized way to work with Cloud Spanner from Go.
+
+
+
+Links:
+
+https://cloud.google.com/apis/docs/client-libraries-explained
+
+https://cloud.google.com/go/docs/reference
