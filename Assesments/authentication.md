@@ -126,3 +126,91 @@ https://cloud.google.com/iap/docs/concepts-overview#how_iap_works
 
 https://cloud.google.com/blog/topics/developers-practitioners/control-access-your-web-sites-identity-aware-proxy
 
+### 4. You are creating a web application that runs in a Compute Engine instance and writes a file to any user's Google Drive. You need to configure the application to authenticate to the Google Drive API.
+
+What should you do?
+
+- A. Use an OAuth Client ID that uses the https://www.googleapis.com/auth/drive.file scope to obtain an access token for each user.
+
+- B. Use an OAuth Client ID with delegated domain-wide authority.
+
+- C. Use the App Engine service account and https://www.googleapis.com/auth/drive.file scope to generate a signed JSON Web Token (JWT).
+
+- D. Use the App Engine service account with delegated domain-wide authority.
+
+### Ans: A
+
+Incorrect Answers:
+
+B. Use an OAuth Client ID with delegated domain-wide authority.
+
+Domain-wide authority is typically used for G Suite domain administrators to grant third-party applications access to the data of all users in the domain. It's not needed for this scenario.
+
+C. Use the App Engine service account and https://www.googleapis.com/auth/drive.file scope to generate a signed JSON Web Token (JWT).
+
+D. Use the App Engine service account with delegated domain-wide authority.
+
+Option C is incorrect because a Compute Engine instance is being used, not App Engine. Moreover, a service account represents an application, not a user, so using a service account wouldn't allow the app to write files to a user's Google Drive.
+
+Option D is also incorrect for the same reasons. In addition, domain-wide authority is unnecessary in this scenario and does not fit the requirements.
+
+
+
+Correct Answer:
+
+A. Use an OAuth Client ID that uses the https://www.googleapis.com/auth/drive.file scope to obtain an access token for each user.
+
+Your web application needs to authenticate on behalf of each user to the Google Drive API in order to write a file to their Drive. This is typically done using OAuth 2.0, which allows users to grant your application permissions to perform actions on their behalf without sharing their password.
+
+The https://www.googleapis.com/auth/drive.file scope allows the application to view and manage Google Drive files that were created by the app.
+
+Links:
+
+https://developers.google.com/drive/api/guides/api-specific-auth
+
+https://developers.google.com/drive/api/guides/about-auth
+
+### 5. You are developing a microservice-based application that will run on Google Kubernetes Engine (GKE). Some of the services need to access different Google Cloud APIs. How should you set up authentication for these services in the cluster, following Google-recommended best practices? (Choose two options.)
+
+- A. Use the service account attached to the GKE node.
+
+- B. Enable Workload Identity in the cluster using the gcloud command-line tool.
+
+- C. Access Google service account keys from a secret management service.
+
+- D. Store Google service account keys in a central secret management service.
+
+- E. Use gcloud to bind the Kubernetes service account to the Google service account using roles/iam.workloadIdentity.
+
+### Ans: B & E
+
+Incorrect Answers:
+
+A. Use the service account attached to the GKE node.
+
+Using the node's service account can lead to over-provisioned permissions and lack of granular control. It's better to use Workload Identity to bind specific Google service accounts to the services that need them.
+
+C. Access Google service account keys from a secret management service.
+
+Managing keys manually, even with a secret management service, can be error-prone and less secure compared to using Workload Identity.
+
+D. Store Google service account keys in a central secret management service.
+
+Similar to option C, this method involves manual management of keys, which can lead to complexity and potential security risks.
+
+
+Correct Answer:
+
+B. Enable Workload Identity in the cluster using the gcloud command-line tool.
+
+Workload Identity is the recommended way to manage authentication for applications running on GKE. It allows you to bind Kubernetes service accounts to Google service accounts, enabling the application to authenticate to Google Cloud services without needing to manage keys manually.
+
+E. Use gcloud to bind the Kubernetes service account to the Google service account using roles/iam.workloadIdentity.
+
+This step is part of setting up Workload Identity. By binding the Kubernetes service account to a Google service account, you enable the application to assume the identity and permissions of the Google service account. This makes it easy to control and audit access to Google Cloud services.
+
+Links:
+
+https://cloud.google.com/kubernetes-engine/docs/tutorials/authenticating-to-cloud-platform#use_workload_identity
+
+https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts

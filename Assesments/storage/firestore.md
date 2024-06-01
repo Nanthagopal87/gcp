@@ -140,3 +140,49 @@ A. Create one root collection for user profiles and one root collection for user
 This approach involves two separate root collections: one for user profiles and another for user posts. It supports scalability and efficient querying, as each collection can be queried independently. This design is suitable for large datasets and allows for flexible queries on both profiles and posts.
 
 Option A (creating one root collection for user profiles and one root collection for user posts) is the most suitable for a social media website. It offers a scalable and efficient structure for handling large numbers of user profiles and posts, allows for flexible and efficient querying, and maintains a clear separation of concerns between user profiles and posts. While it requires managing the relationship between profiles and posts, this can be efficiently handled with proper indexing and query design.
+
+### 5. Your company needs a database solution that stores customer purchase history and meets the following requirements:
+
+Customers can query their purchase immediately after submission.
+
+Purchases can be sorted based on a variety of fields.
+
+Distinct record formats can be stored simultaneously.
+
+Which storage option satisfies these requirements?
+
+- A. Firestore in Native mode
+
+- B. Cloud Storage using object reading
+
+- C. Cloud SQL using a SQL SELECT statement
+
+- D. Firestore in Datastore mode using a global query
+
+### Ans: A
+
+Incorrect Answers:
+
+B. Cloud Storage using object reading
+
+Cloud Storage is an object storage service, which doesn't offer immediate querying or sorting based on fields. It's suitable for storing unstructured data but doesn't provide database-like querying capabilities.
+
+C. Cloud SQL using a SQL SELECT statement
+
+While Cloud SQL (a relational database service) does allow querying and sorting, it doesn't natively handle distinct record formats as NoSQL databases do. Schema changes would be required to accommodate different formats, making it less suitable for the described use case.
+
+D. Firestore in Datastore mode using a global query
+
+Datastore mode in Firestore is also a NoSQL database service that might seem suitable. However, the Native mode of Firestore has more robust indexing and querying capabilities, making it a better fit for the requirements.
+
+
+
+Correct Answer:
+
+A. Firestore in Native mode
+
+Firestore in Native mode offers flexible and scalable NoSQL database storage. It allows clients to read their writes immediately and provides indexing and sorting capabilities on various fields. The distinct record formats can be stored as documents with different fields.
+
+Links:
+
+https://cloud.google.com/datastore/docs/firestore-or-datastore

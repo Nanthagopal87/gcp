@@ -70,3 +70,40 @@ Links:
 
 https://cloud.google.com/kubernetes-engine/docs/concepts/workload-identity
 
+### 3. You are developing a web application that contains private images and videos stored in a Cloud Storage bucket. Your users are anonymous and do not have Google Accounts. You want to use your application-specific logic to control access to the images and videos. How should you configure access?
+
+- A. Cache each web application user's IP address to create a named IP table using Google Cloud Armor. Create a Google Cloud Armor security policy that allows users to access the backend bucket.
+
+- B. Grant the Storage Object Viewer IAM role to allUsers. Allow users to access the bucket after authenticating through your web application.
+
+- C. Configure Identity-Aware Proxy (IAP) to authenticate users into the web application. Allow users to access the bucket after authenticating through IAP.
+
+- D. Generate a signed URL that grants read access to the bucket. Allow users to access the URL after authenticating through your web application.
+
+### Ans: D
+
+Incorrect Answers:
+
+A. Cache each web application user's IP address to create a named IP table using Google Cloud Armor. Create a Google Cloud Armor security policy that allows users to access the backend bucket.
+
+Google Cloud Armor protects against Distributed Denial of Service (DDoS) attacks, not for providing access to objects in Cloud Storage.
+
+B. Grant the Storage Object Viewer IAM role to allUsers. Allow users to access the bucket after authenticating through your web application.
+
+It would grant everyone on the internet access to your bucket, which would not allow you to control access with your application-specific logic.
+
+C. Configure Identity-Aware Proxy (IAP) to authenticate users into the web application. Allow users to access the bucket after authenticating through IAP.
+
+Identity-Aware Proxy (IAP) is used to control access to applications running in Google Cloud, not for controlling access to Cloud Storage buckets. Moreover, IAP requires users to have Google accounts, but the scenario specified that the users are anonymous and do not have Google accounts.
+
+
+
+Correct Answer:
+
+D. Generate a signed URL that grants read access to the bucket. Allow users to access the URL after authenticating through your web application.
+
+In this scenario, you need to control access to Cloud Storage objects for users who don't have Google accounts. Signed URLs are a good solution for this. These URLs provide temporary access to a specific object and contain all the necessary authorization information. After authenticating users with your web app's logic, you can generate and provide them with these signed URLs for access to the required resources.
+
+Links:
+
+https://cloud.google.com/storage/docs/access-control/signed-urls#should-you-use

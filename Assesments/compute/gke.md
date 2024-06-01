@@ -449,3 +449,84 @@ Links:
 https://cloud.google.com/kubernetes-engine/docs/concepts/cluster-notifications
 
 https://cloud.google.com/kubernetes-engine/docs/concepts/release-channels#channels
+
+### 14. You have containerized a legacy application that stores its configuration on an NFS share. You need to deploy this application to Google Kubernetes Engine (GKE) and do not want the application serving traffic until after the configuration has been retrieved.
+
+What should you do?
+
+- A. Use the gsutil utility to copy files from within the Docker container at startup, and start the service using an ENTRYPOINT script.
+
+- B. Create a PersistentVolumeClaim on the GKE cluster. Access the configuration files from the volume, and start the service using an ENTRYPOINT script.
+
+- C. Use the COPY statement in the Dockerfile to load the configuration into the container image. Verify that the configuration is available, and start the service using an ENTRYPOINT script.
+
+- D. Add a startup script to the GKE instance group to mount the NFS share at node startup. Copy the configuration files into the container, and start the service using an ENTRYPOINT script.
+
+### Ans: B
+
+Incorrect Answers:
+
+A. Use the gsutil utility to copy files from within the Docker container at startup, and start the service using an ENTRYPOINT script.
+
+Is incorrect because gsutil is a command-line tool for interacting with Google Cloud Storage, not for managing containerized applications or NFS shares.
+
+C. Use the COPY statement in the Dockerfile to load the configuration into the container image. Verify that the configuration is available, and start the service using an ENTRYPOINT script.
+
+Is incorrect because storing configuration data in a Docker image isn't a best practice for Kubernetes. It reduces the portability of the container and doesn't fit the cloud-native model of keeping configuration and secrets outside of the application.
+
+D. Add a startup script to the GKE instance group to mount the NFS share at node startup. Copy the configuration files into the container, and start the service using an ENTRYPOINT script.
+
+Is incorrect because GKE manages the underlying node infrastructure, including startup scripts. Also, GKE abstracts away individual node access to the point where directly scripting individual node behavior is not practical or even possible.
+
+
+
+Correct Answer:
+
+B. Create a PersistentVolumeClaim on the GKE cluster. Access the configuration files from the volume, and start the service using an ENTRYPOINT script.
+
+This option leverages Kubernetes' native capabilities for managing storage resources, which includes support for NFS. The application can then access its configuration from the NFS share as if it were local to the container. The container will not serve traffic until the ENTRYPOINT script starts the service, which should only happen after the configuration has been successfully retrieved.
+
+Links:
+
+https://kubernetes.io/docs/concepts/storage/persistent-volumes/#access-modes
+
+https://cloud.google.com/filestore/docs/accessing-fileshares
+
+https://cloud.google.com/storage/docs/gcs-fuse
+
+### 15. You are developing a JPEG image-resizing API hosted on Google Kubernetes Engine (GKE). Callers of the service will exist within the same GKE cluster. You want clients to be able to get the IP address of the service.
+
+What should you do?
+
+
+- A. Define a GKE Service. Clients should use the name of the A record in Cloud DNS to find the service's cluster IP address.
+
+- B. Define a GKE Service. Clients should use the service name in the URL to connect to the service.
+
+- C. Define a GKE Endpoint. Clients should obtain the endpoint name from the appropriate environment variable in the client container.
+
+- D. Define a GKE Endpoint. Clients should get the endpoint name from Cloud DNS.
+
+### Ans: B
+
+Incorrect Answers:
+
+A. Define a GKE Service. Clients should use the name of the A record in Cloud DNS to find the service's cluster IP address.
+
+While defining a GKE Service is correct, typically within a Kubernetes cluster, you do not need to rely on an A record in Cloud DNS. Pods within the cluster can directly use the service name.
+
+C. Define a GKE Endpoint. Clients should obtain the endpoint name from the appropriate environment variable in the client container.
+
+D. Define a GKE Endpoint. Clients should get the endpoint name from Cloud DNS.
+
+Kubernetes doesn't have a concept called a "GKE Endpoint." Endpoints in Kubernetes are a part of services and are used internally to track the IPs of pods that the service should proxy to. These are not something that clients interact with directly.
+
+Correct Answer:
+
+B. Define a GKE Service. Clients should use the service name in the URL to connect to the service.
+
+This is the correct way to allow internal communication within the cluster. The service name acts as a DNS name, and the service's cluster IP is automatically resolved within the cluster.
+
+Links:
+
+https://cloud.google.com/kubernetes-engine/docs/concepts/service-discovery

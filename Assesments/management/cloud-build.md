@@ -168,3 +168,169 @@ Links:
 https://cloud.google.com/container-registry/
 
 https://stackoverflow.com/questions/48602546/google-cloud-functions-how-to-securely-store-service-account-private-key-when
+
+### 7. You are developing a new web application using Cloud Run and committing code to Cloud Source Repositories. You want to deploy new code in the most efficient way possible. You have already created a Cloud Build YAML file that builds a container and runs the following command: gcloud run deploy.
+
+What should you do next?
+
+- A. Create a Pub/Sub topic to be notified when code is pushed to the repository. Create a Pub/Sub trigger that runs the build file when an event is published to the topic.
+
+- B. Create a build trigger that runs the build file in response to a repository code being pushed to the development branch.
+
+- C. Create a webhook build trigger that runs the build file in response to HTTP POST calls to the webhook URL.
+
+- D. Create a Cron job that runs the following command every 24 hours: gcloud builds submit.
+
+### Ans: B
+
+Incorrect Answers:
+
+A. Create a Pub/Sub topic to be notified when code is pushed to the repository. Create a Pub/Sub trigger that runs the build file when an event is published to the topic.
+
+Pub/Sub notifications are typically used for event-driven, asynchronous workloads, and not specifically for triggering builds.
+
+C. Create a webhook build trigger that runs the build file in response to HTTP POST calls to the webhook URL.
+
+is incorrect because while you can use webhooks to trigger builds, it's less efficient and less secure than using Cloud Build's native triggering mechanism. It would also involve more manual intervention or additional service configurations to send HTTP POST calls every time code is pushed to the repository.
+
+D. Create a Cron job that runs the following command every 24 hours: gcloud builds submit.
+
+It relies on a periodic (daily) build rather than reacting to code pushes. This is less efficient because it could result in unnecessary builds if no code changes have occurred, or it could delay the deployment of critical code changes.
+
+
+
+Correct Answer:
+
+B. Create a build trigger that runs the build file in response to a repository code being pushed to the development branch.
+
+Cloud Build provides build triggers, which can be configured to run a build process when new code is pushed to a specified branch in your source code repository. This strategy is often called Continuous Deployment or Continuous Delivery. Option B allows you to automate the deployment process efficiently. Whenever a new code is pushed to the development branch, a build is triggered automatically, ensuring that changes are deployed promptly and only when needed.
+
+Links:
+
+https://cloud.google.com/build/docs/automating-builds/create-manage-triggers#connect_repo
+
+### 8. You are developing a new application that has the following design requirements:
+
+Creation and changes to the application infrastructure are versioned and auditable.
+
+The application and deployment infrastructure uses Google-managed services as much as possible.
+
+The application runs on a serverless compute platform.
+
+How should you design the application's architecture?
+
+- A.
+
+1) Store the application and infrastructure source code in a Git repository.
+
+2) Use Cloud Build to deploy the application infrastructure with Terraform.
+
+3) Deploy the application to a Cloud Function as a pipeline step.
+
+- B.
+
+1) Deploy Jenkins from the Google Cloud Marketplace, and define a continuous integration pipeline in Jenkins.
+
+2) Configure a pipeline step to pull the application source code from a Git repository.
+
+3) Deploy the application source code to App Engine as a pipeline step.
+
+- C.
+
+1) Create a continuous integration pipeline on Cloud Build, and configure the pipeline to deploy the application infrastructure using Deployment Manager templates.
+
+2) Configure a pipeline step to create a container with the latest application source code.
+
+3) Deploy the container to a Compute Engine instance as a pipeline step.
+
+- D.
+
+1) Deploy the application infrastructure using gcloud commands.
+
+2) Use Cloud Build to define a continuous integration pipeline for changes to the application source code.
+
+3) Configure a pipeline step to pull the application source code from a Git repository, and create a containerized application.
+
+4) Deploy the new container on Cloud Run as a pipeline step.
+
+### Ans: D
+
+ncorrect Answers:
+
+
+
+Options A, B, C
+
+The other options have elements that don't align with all the requirements. For example, Terraform in option A is not a Google-managed service, Jenkins in option B is not a Google-managed service, and Compute Engine in option C is not a serverless platform.
+
+
+
+Correct Answer:
+
+Option D:
+
+Deploying the application infrastructure using gcloud commands:
+
+This uses Google's command-line tool to manage resources, enabling versioning and auditability.
+
+Using Cloud Build for a continuous integration pipeline:
+
+Cloud Build is a Google-managed service that lets you build, test, and deploy applications on Google's infrastructure.
+
+Pulling the application source code from a Git repository and creating a containerized application:
+
+This fits the requirement of versioning and making use of containers.
+
+Deploying the new container on Cloud Run as a pipeline step:
+
+Cloud Run is a Google-managed serverless platform, which meets the requirement for running on a serverless compute platform.
+
+Links:
+
+https://cloud.google.com/docs/ci-cd
+
+### 9. You have written a Cloud Function in Node.js with source code stored in a Git repository. You want any committed changes to the source code to be automatically tested. You write a Cloud Build configuration that pushes the source code to a uniquely named Cloud Function, then calls the function as a test, and then deletes the Cloud Function as cleanup. You discover that if the test fails, the Cloud Function is not deleted.
+
+What should you do?
+
+- A. Change the order of the steps to delete the Cloud Function before performing the test.
+
+- B. Include a waitFor option in the Cloud Build step that deletes the Cloud Function test step as a required preceding step.
+
+- C. Have the Cloud Build step write the Cloud Function results to a file and return 0. Add a step after the Cloud Function deletion that checks whether the file contains the expected results and fails if it doesn't.
+
+- D. Have the Cloud Build test step set its outcome in an environment variable called result and return 0. Add a final step after the Cloud Function deletion that checks whether the environment variable contains the expected results.
+
+### Ans: C
+
+Incorrect Answers:
+
+A. Change the order of the steps to delete the Cloud Function before performing the test.
+
+Deleting the Cloud Function before performing the test would make the test impossible since the function would no longer exist.
+
+B. Include a waitFor option in the Cloud Build step that deletes the Cloud Function test step as a required preceding step.
+
+Using the waitFor option in this manner would cause the entire build to fail if the test fails, and the Cloud Function would not be deleted. It won't solve the issue of cleaning up the function if the test fails.
+
+D. Have the Cloud Build test step set its outcome in an environment variable called result and return 0. Add a final step after the Cloud Function deletion that checks whether the environment variable contains the expected results.
+
+Since environment variables are local to the container in which a step executes, they cannot be used to pass information between different steps in the build process.
+
+
+
+Correct Answer:
+
+C. Have the Cloud Build step write the Cloud Function results to a file and return 0. Add a step after the Cloud Function deletion that checks whether the file contains the expected results and fails if it doesn't.
+
+By deploying the Cloud Function, saving the results to a file (regardless of success or failure), deleting the Cloud Function, and then testing the content of the file, you ensure proper cleanup and accurate reporting of the test results.
+
+Links:
+
+https://cloud.google.com/build/docs/configuring-builds/configure-build-step-order
+
+https://cloud.google.com/build/docs/configuring-builds/create-basic-configuration
+
+https://cloud.google.com/build/docs/build-config
+
+### 10. 

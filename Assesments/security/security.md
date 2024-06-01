@@ -85,3 +85,49 @@ https://kubernetes.io/docs/concepts/services-networking/network-policies/
 
 https://istio.io/latest/docs/tasks/security/authentication/mtls-migration/
 
+
+### 4. Your company has a new security initiative that requires all data stored in Google Cloud to be encrypted by customer-managed encryption keys. You plan to use Cloud Key Management Service (KMS) to configure access to the keys. You need to follow the "separation of duties" principle and Google-recommended best practices.
+
+What should you do? (Choose two options)
+
+- A. Provision Cloud KMS in its own project.
+
+- B. Do not assign an owner to the Cloud KMS project.
+
+- C. Provision Cloud KMS in the project where the keys are being used.
+
+- D. Grant the roles/cloudkms.admin role to the owner of the project where the keys from Cloud KMS are being used.
+
+- E. Grant an owner role for the Cloud KMS project to a different user than the owner of the project where the keys from Cloud KMS are being used.
+
+### Ans: A & B
+
+Incorrect Answers:
+
+C. Provision Cloud KMS in the project where the keys are being used.
+
+Is not correct because co-locating Cloud KMS in the same project where keys are used could lead to mismanagement or unintended key access. It is best to keep these concerns separated.
+
+D. Grant the roles/cloudkms.admin role to the owner of the project where the keys from Cloud KMS are being used.
+
+Granting the cloudkms.admin role to the owner of the project where the keys are used violates the separation of duties principle. This would give one user the ability to both manage and use the keys, which could lead to unauthorized access or changes.
+
+E. Grant an owner role for the Cloud KMS project to a different user than the owner of the project where the keys from Cloud KMS are being used.
+
+(not recommended) If you must continue to use the owner role, ensure that it is granted to a different principal in your-key-project than the principal who is the owner of your-project. The owner can still use keys, but only in a single project.  (https://cloud.google.com/kms/docs/separation-of-duties#using_separate_project)
+
+
+
+Correct Answer:
+
+A. Provision Cloud KMS in its own project.
+
+Creating Cloud Key Management Service (KMS) in its own project provides a clear boundary of responsibility and reduces the risk of accidental key deletion or modification.
+
+B. Do not assign an owner to the Cloud KMS project.
+
+(Recommended) Create your project key without an owner at the project level, and designate an Organization Admin granted at the organization level. Unlike an owner, an Organization Admin can't manage or use keys directly. They are restricted to setting IAM policies, which restrict who can manage and use keys. Using an organization-level node, you can further restrict permissions for projects within your organization. (https://cloud.google.com/kms/docs/separation-of-duties#using_separate_project)
+
+Links:
+
+https://cloud.google.com/kms/docs/separation-of-duties#using_separate_project
